@@ -19,7 +19,7 @@ let drawMapChart = function(data)
     basemap: "https://data.sfgov.org/resource/keex-zmn4.geojson",
     streets: "https://data.sfgov.org/resource/hn5x-7sr8.geojson?$limit=8000",
     cases: "mapCases.csv"
-    //arrests: "https://data.sfgov.org/resource/nwbb-fxkq.json"
+
   };
   // setup path generator (note it is a GEO path, not a normal path)
   window.path = d3.geoPath().projection(projection);
@@ -68,9 +68,7 @@ function drawStreets(json)
   const streets = json.features.filter(function(d) {
     	return d;
   });
-  //
-  // //console.log("removed", json.features.length - streets.length, "inactive streets");
-  //
+  
   g.streets.selectAll("path.street")
     .data(streets)
     .enter()
@@ -81,14 +79,12 @@ function drawStreets(json)
 
 function drawData(csv)
 {
-  let color = d3.scaleOrdinal(d3.schemeTableau10); //(schemeTableau10);
-      //.range(["#fab520", " #e42308", "#f87614", "#5f160e"]);
+  let color = d3.scaleOrdinal(d3.schemeTableau10);
   console.log("data" ,csv);
   csv.forEach(function(d) {
     const latitude = parseFloat(d.Latitude);
     const longitude = parseFloat(d.Longitude);
     const pixels = projection([longitude, latitude]);
-    //const requestType =
     d.x = pixels[0];
     d.y = pixels[1];
   });
