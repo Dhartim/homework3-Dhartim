@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!-- include d3.js modules -->
+    <script src="https://d3js.org/d3-array.v2.min.js"></script>
+    <script src="maps.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <figure>
+      <svg id="map" height="600" width="960">
+        <g id="basemap"></g>
+        <!-- turn off pointer events for certain groups -->
+        <g id="streets" pointer-events="none"></g>
+        <g id="outline" pointer-events="none"></g>
+
+        <g id="arrests"></g>
+        <g id="tooltip" pointer-events="none"></g>
+        <g id="details" pointer-events="none"></g>
+      </svg>
+    </figure>
+    <script type="text/javascript">
+      d3.csv("mapCases.csv").then(drawMapChart);
+    </script>
+  </body>
+</html>
