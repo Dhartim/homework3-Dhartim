@@ -26,7 +26,7 @@ let drawMapChart = function(data)
       .attr("x", 0)
       .attr("y", 0);
 
-    const body = details.append("xhtml:body")
+    window.body = details.append("xhtml:body")
       .style("text-align", "left")
       .style("background", "none")
       .html("<p>N/A</p>");
@@ -143,6 +143,49 @@ function drawData(csv)
     .attr("class", "symbol")
     .style('fill', d => color(d['Request Type']));
 
+  //details on demand
+    symbols.on("mouseover", function(d) {
+    d3.select(this).raise();
+    d3.select(this).classed("active", true);
+
+    // use template literal for the detail table
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+    const html = `
+      <table border="0" cellspacing="0" cellpadding="2">
+      <tbody>
+        <tr>
+          <th>Police District:</th>
+          <td>${d['Police District']}</td>
+        </tr>
+        <tr>
+          <th>Request Type:</th>
+          <td>${d['Request Type']}</td>
+        </tr>
+        <tr>
+          <th>Responsible Agency:</th>
+          <td>${d['Responsible Agency']}</td>
+        </tr>
+        <tr>
+          <th>Latitude:</th>
+          <td>${d['Latitude']}</td>
+        </tr>
+        <tr>
+          <th>Longitude:</th>
+          <td>${d['Longitude']}</td>
+        </tr>
+      </tbody>
+      </table>
+    `;
+
+    body.html(html);
+    details.style("visibility", "visible");
+  });
+
+  symbols.on("mouseout", function(d) {
+    d3.select(this).classed("active", false);
+    details.style("visibility", "hidden");
+  });
+
   //brushing interactivity
   symbols.on("mouseover.brush1", function(d) {
         symbols.filter(e => (d['Request Type'] !== e['Request Type'])).lower().transition().style("fill", "#ddd");
@@ -150,6 +193,23 @@ function drawData(csv)
   symbols.on("mouseout.brush1", function(d) {
         symbols.transition().style("fill", d => color(d['Request Type']));
   });
-  //details on demand
 
+  //legends
+    svg.append("text")
+      .attr("class", "text")
+      .attr("x", 0)
+      .attr("y", 480)
+      .text("Request Type");
+
+    const colorLegendG = svg.append('g')
+      .attr("transform", "translate(10,500)");
+
+    const colorLegend = d3.legendColor()
+          .scale(color)
+          .shape('circle')
+    		  .shapePadding(3)
+    colorLegendG.call(colorLegend);
+    colorLegendG.selectAll('text')
+            .attr("class", "text")
+            .attr('font-size', "10");
 }

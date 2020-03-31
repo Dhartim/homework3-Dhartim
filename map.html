@@ -7,6 +7,7 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <!-- include d3.js modules -->
     <script src="https://d3js.org/d3-array.v2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.13.0/d3-legend.js"></script>
     <script src="maps.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
@@ -22,6 +23,9 @@
         <g id="tooltip" pointer-events="none"></g>
         <g id="details" pointer-events="none"></g>
       </svg>
+      <figcaption>
+    Source: <a href="">311 Cases for Rec / Park</a> (<a href="">Neighborhoods</a>, <a href="https://data.sfgov.org/Geographic-Locations-and-Boundaries/Streets-Active-and-Retired/3psu-pn9h">Streets</a>)
+  </figcaption>
     </figure>
     <script type="text/javascript">
       d3.csv("mapCases.csv").then(drawMapChart);
