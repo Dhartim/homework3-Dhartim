@@ -1,9 +1,12 @@
 body{
   background-color: white;
-   text-align: center;
 
-   font-family: sans-serif;
+   font-family: Roboto;
    font-size: 9pt;
+}
+
+.figure{
+    text-align: center;
 }
 
 #tooltip {
